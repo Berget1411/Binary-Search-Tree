@@ -5,6 +5,12 @@ export default class Tree {
     this.root = this.buildTree(this.sortArray(arr));
   }
 
+  min(root) {
+    if (!root.left) return root.value;
+
+    return this.min(root.left);
+  }
+
   sortArray(arr) {
     const sorted = [...new Set(arr)].sort((a, b) => a - b);
     return sorted;
@@ -24,15 +30,44 @@ export default class Tree {
     return root;
   }
 
-  insert(value, root = this.root) {
+  insert(value) {
+    this.root = this.insertNode(this.root, value);
+  }
+
+  insertNode(root, value) {
     if (root === null) return new Node(value);
 
     if (root.value < value) {
-      root.right = this.insert(value, root.right);
+      root.right = this.insertNode(root.right, value);
     } else {
-      root.left = this.insert(value, root.left);
+      root.left = this.insertNode(root.left, value);
     }
+    return root;
+  }
 
+  delete(value) {
+    this.root = this.deleteNode(this.root, value);
+  }
+
+  deleteNode(root, value) {
+    if (root === null) return root;
+
+    if (root.value > value) {
+      root.left = this.deleteNode(root.left, value);
+    } else if (root.value < value) {
+      root.right = this.deleteNode(root.right, value);
+    } else {
+      if (!root.left && !root.right) {
+        return null;
+      }
+      if (!root.left) {
+        return root.right;
+      } else if (!root.right) {
+        return root.left;
+      }
+      root.value = this.min(root.right);
+      root.right = this.deleteNode(root.right, root.value);
+    }
     return root;
   }
 
