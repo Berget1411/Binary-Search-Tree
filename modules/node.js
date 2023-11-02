@@ -4,4 +4,10 @@ export default class Node {
     this.left = left;
     this.right = right;
   }
+  setLeft(node) {
+    this.left = node;
+  }
+  setRight(node) {
+    this.right = node;
+  }
 }
