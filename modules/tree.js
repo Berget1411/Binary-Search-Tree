@@ -24,6 +24,18 @@ export default class Tree {
     return root;
   }
 
+  insert(value, root = this.root) {
+    if (root === null) return new Node(value);
+
+    if (root.value < value) {
+      root.right = this.insert(value, root.right);
+    } else {
+      root.left = this.insert(value, root.left);
+    }
+
+    return root;
+  }
+
   prettyPrint(node = this.root, prefix = '', isLeft = true) {
     if (node === null) {
       return;
