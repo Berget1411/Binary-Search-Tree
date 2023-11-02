@@ -87,4 +87,13 @@ export default class Tree {
       this.prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
     }
   }
+
+  find(value, root = this.root) {
+    if (root === null) return root;
+
+    if (root.value > value) root = this.find(value, root.left);
+    else if (root.value < value) root = this.find(value, root.right);
+
+    return root;
+  }
 }
