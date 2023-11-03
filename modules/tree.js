@@ -180,6 +180,7 @@ export default class Tree {
   }
 
   isBalanced(node = this.root) {
+    if (node === null) return true;
     const heightDiff = Math.abs(
       this.height(node.left) - this.height(node.right),
     );
@@ -189,5 +190,10 @@ export default class Tree {
       this.isBalanced(node.left) &&
       this.isBalanced(node.right)
     );
+  }
+
+  rebalance() {
+    const arr = this.levelOrder();
+    this.root = this.buildTree(this.sortArray(arr));
   }
 }
