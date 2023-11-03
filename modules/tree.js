@@ -96,4 +96,40 @@ export default class Tree {
 
     return root;
   }
+
+  levelOrder(cb, root = this.root) {
+    if (root === null) return;
+
+    const queue = [];
+    const arr = [];
+
+    queue.push(root);
+
+    while (queue.length) {
+      const current = queue[0];
+      if (cb !== undefined) cb(current);
+      else {
+        arr.push(current.value);
+      }
+      if (current.left !== null) queue.push(current.left);
+      if (current.right !== null) queue.push(current.right);
+      queue.shift();
+    }
+    if (cb === undefined) return arr;
+  }
+
+  preorder(cb, root = this.root) {
+    if (root === null) return [];
+    const stack = [root];
+    const results = [];
+
+    while (stack.length) {
+      const node = stack.pop();
+      if (node.right) stack.push(node.right);
+      if (node.left) stack.push(node.left);
+      if (cb) cb(node);
+      results.push(node.value);
+    }
+    if (cb === undefined) return results;
+  }
 }
