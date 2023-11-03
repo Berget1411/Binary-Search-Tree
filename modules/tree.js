@@ -143,4 +143,15 @@ export default class Tree {
 
     if (result) return result;
   }
+
+  postorder(cb, result = [], node = this.root) {
+    if (!this.root) return [];
+    if (node === null) return;
+
+    this.postorder(cb, result, node.left);
+    this.postorder(cb, result, node.right);
+    cb ? cb(node) : result.push(node.value);
+
+    if (result) return result;
+  }
 }
