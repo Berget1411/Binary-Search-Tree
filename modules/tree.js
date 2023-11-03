@@ -107,7 +107,7 @@ export default class Tree {
 
     while (queue.length) {
       const current = queue[0];
-      if (cb !== undefined) cb(current);
+      if (cb) cb(current);
       else {
         arr.push(current.value);
       }
@@ -115,7 +115,7 @@ export default class Tree {
       if (current.right !== null) queue.push(current.right);
       queue.shift();
     }
-    if (cb === undefined) return arr;
+    if (!cb) return arr;
   }
 
   preorder(cb, root = this.root) {
@@ -130,6 +130,17 @@ export default class Tree {
       if (cb) cb(node);
       results.push(node.value);
     }
-    if (cb === undefined) return results;
+    if (!cb) return results;
+  }
+
+  inorder(cb, result = [], node = this.root) {
+    if (!this.root) return [];
+    if (node === null) return;
+
+    this.inorder(cb, result, node.left);
+    cb ? cb(node) : result.push(node.value);
+    this.inorder(cb, result, node.right);
+
+    if (result) return result;
   }
 }
