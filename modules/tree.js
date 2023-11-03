@@ -118,6 +118,7 @@ export default class Tree {
     if (!cb) return arr;
   }
 
+  //root left right
   preorder(cb, root = this.root) {
     if (root === null) return [];
     const stack = [root];
@@ -133,6 +134,7 @@ export default class Tree {
     if (!cb) return results;
   }
 
+  //left root right
   inorder(cb, result = [], node = this.root) {
     if (!this.root) return [];
     if (node === null) return;
@@ -144,6 +146,7 @@ export default class Tree {
     if (result) return result;
   }
 
+  //left right root
   postorder(cb, result = [], node = this.root) {
     if (!this.root) return [];
     if (node === null) return;
@@ -153,5 +156,26 @@ export default class Tree {
     cb ? cb(node) : result.push(node.value);
 
     if (result) return result;
+  }
+
+  height(node = this.root) {
+    if (!node) return -1;
+
+    const leftHeight = this.height(node.left);
+    const rightHeight = this.height(node.right);
+
+    return Math.max(leftHeight, rightHeight) + 1;
+  }
+
+  depth(nodeVal, node = this.root, edgeCount = 0) {
+    if (!node) return;
+
+    if (node.value === nodeVal) return edgeCount;
+
+    if (node.value > nodeVal) {
+      return this.depth(nodeVal, node.left, edgeCount + 1);
+    }
+
+    return this.depth(nodeVal, node.right, edgeCount + 1);
   }
 }
